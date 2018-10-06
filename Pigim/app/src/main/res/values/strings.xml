@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Pigim</string>
+    <string name="writeMsgPrompt">Type a message</string>
+</resources>

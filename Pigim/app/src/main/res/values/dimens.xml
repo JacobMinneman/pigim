@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="writeMsgHeight">50dp</dimen>
+    <dimen name="conversationFontSize">25dp</dimen>
+</resources>

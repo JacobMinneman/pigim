@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/sendMsgText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/writeMsgHeight"
+        android:layout_alignParentBottom="true"
+        android:ems="10"
+        android:hint="@string/writeMsgPrompt"
+        android:inputType="textCapSentences|textAutoCorrect"
+        android:imeOptions="actionDone"/>
+
+
+    <ScrollView
+        android:id="@+id/receiveMsgScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/sendMsgText">
+
+        <TextView
+            android:id="@+id/receiveMsgText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test test test"
+            android:layout_gravity="right"
+            android:textSize="@dimen/conversationFontSize"/>
+
+    </ScrollView>
+
+</RelativeLayout>
