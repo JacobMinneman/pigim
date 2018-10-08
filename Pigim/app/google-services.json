@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "132752102627",
+    "firebase_url": "https://pigim-14aff.firebaseio.com",
+    "project_id": "pigim-14aff",
+    "storage_bucket": "pigim-14aff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132752102627:android:4e5394d28dbfa9d9",
+        "android_client_info": {
+          "package_name": "com.android415.pigim.pigim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "132752102627-2ohfd8llc4frl1cicv8o7vqaurh04geh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzhNcNoJ9VEVku9gz3z14ncIeyg8HMr0w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
