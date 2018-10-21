@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin_main_screen"
     tools:context=".MainActivity">
 
     <EditText
@@ -18,17 +19,15 @@
 
 
     <ScrollView
-        android:id="@+id/receiveMsgScroll"
+        android:id="@+id/messageScroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/sendMsgText">
 
         <TextView
-            android:id="@+id/receiveMsgText"
+            android:id="@+id/messageText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Test test test"
-            android:layout_gravity="right"
             android:textSize="@dimen/conversationFontSize"/>
 
     </ScrollView>

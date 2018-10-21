@@ -2,4 +2,13 @@
 <resources>
     <dimen name="writeMsgHeight">50dp</dimen>
     <dimen name="conversationFontSize">25dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="login_margins">20dp</dimen>
+    <dimen name="margin_main_screen">10dp</dimen>
+    <dimen name="margin_login_top">100dp</dimen>
+    <dimen name="title_text_size">25sp</dimen>
+    <dimen name="settings_margin">20dp</dimen>
+    <dimen name="title_settings_margin">15dp</dimen>
 </resources>
