@@ -117,24 +117,4 @@ public class MainActivity extends AppCompatActivity
         preferencesEditor.apply();
     }
 
-    @Override
-    protected void onRestart()
-    {
-        super.onRestart();
-
-        // Getting the theme from shared preferences
-        preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-        isDarkThemeOn = preferences.getBoolean(THEME_KEY, false);
-        if (isDarkThemeOn)
-        {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else
-        {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-
-        recreate();
-    }
-
 }
