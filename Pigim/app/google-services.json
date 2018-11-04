@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "132752102627",
-    "firebase_url": "https://pigim-14aff.firebaseio.com",
-    "project_id": "pigim-14aff",
-    "storage_bucket": "pigim-14aff.appspot.com"
+    "project_number": "152615992293",
+    "firebase_url": "https://pigim-5e07f.firebaseio.com",
+    "project_id": "pigim-5e07f",
+    "storage_bucket": "pigim-5e07f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:132752102627:android:4e5394d28dbfa9d9",
+        "mobilesdk_app_id": "1:152615992293:android:4e5394d28dbfa9d9",
         "android_client_info": {
           "package_name": "com.android415.pigim.pigim"
         }
       },
       "oauth_client": [
         {
-          "client_id": "132752102627-2ohfd8llc4frl1cicv8o7vqaurh04geh.apps.googleusercontent.com",
+          "client_id": "152615992293-lah16ih6i95ih1komqt977scgttlkuai.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android415.pigim.pigim",
+            "certificate_hash": "6d6e7dae7ff7ac30785faa1c077ede40cf09a257"
+          }
+        },
+        {
+          "client_id": "152615992293-ug63i0j3s5aucnsuh33jtao6if95dsd3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDzhNcNoJ9VEVku9gz3z14ncIeyg8HMr0w"
+          "current_key": "AIzaSyBOngqFBuN0wPCwBtReMOBTK4nMEvobi2E"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "152615992293-ug63i0j3s5aucnsuh33jtao6if95dsd3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
