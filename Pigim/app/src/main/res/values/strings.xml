@@ -19,5 +19,12 @@
     <string name="dark_theme_switch">Dark Theme</string>
     <string name="delete_message_history">Delete Message History</string>
     <string name="show_password">Show Password</string>
+    <string name="export">Export Chat</string>
+    <string name="contacts">Contacts</string>
+    <string name="chats">Chats</string>
+    <string name="app_title">Pigim</string>
 
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>

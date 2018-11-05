@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/login_margins"
         android:ems="10"
-        android:hint="Username (pigim@pigim.pigim)"
+        android:hint="Username (me@pigim.com)"
         android:inputType="textEmailAddress" />
 
     <RelativeLayout
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/login_margins"
             android:ems="10"
-            android:hint="Password (password)"
+            android:hint="Password (pass)"
             android:inputType="textPassword" />
 
         <CheckBox
