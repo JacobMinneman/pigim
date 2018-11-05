@@ -27,8 +27,8 @@ public class LoginActivity extends AppCompatActivity
 
     private Boolean isDarkThemeOn = true;
 
-    private final String USERNAME = "pigim@pigim.pigim";
-    private final String PASSWORD = "password";
+    private final String USERNAME = "me@pigim.com";
+    private final String PASSWORD = "pass";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

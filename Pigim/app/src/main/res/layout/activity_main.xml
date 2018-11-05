@@ -1,35 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/margin_main_screen"
+    android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/sendMsgText"
+    <FrameLayout
+        android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/writeMsgHeight"
-        android:layout_alignParentBottom="true"
-        android:ems="10"
-        android:hint="@string/writeMsgPrompt"
-        android:inputType="textCapSentences|textAutoCorrect"
-        android:imeOptions="actionDone"/>
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/main_screen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_main_screen">
+
+            <RelativeLayout
+                android:id="@+id/sendMsgLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/writeMsgHeight"
+                android:layout_alignParentBottom="true">
+
+                <EditText
+                    android:id="@+id/sendMsgText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/button_send"
+                    android:ems="10"
+                    android:hint="@string/writeMsgPrompt"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapSentences|textAutoCorrect" />
+
+                <Button
+                    android:id="@+id/button_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="Send" />
 
 
-    <ScrollView
-        android:id="@+id/messageScroll"
-        android:layout_width="match_parent"
+            </RelativeLayout>
+
+            <ScrollView
+                android:id="@+id/messageScroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/sendMsgLayout">
+
+                <TextView
+                    android:id="@+id/messageText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/conversationFontSize" />
+
+            </ScrollView>
+        </RelativeLayout>
+    </FrameLayout>
+
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_above="@+id/sendMsgText">
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_menu" />
 
-        <TextView
-            android:id="@+id/messageText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/conversationFontSize"/>
-
-    </ScrollView>
-
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>
