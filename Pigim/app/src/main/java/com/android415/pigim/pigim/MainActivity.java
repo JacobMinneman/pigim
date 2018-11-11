@@ -77,25 +77,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         messages.setText(conversation);
 
         // listener/handler for sending a message
-        sendMsg.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    sendMessage();
-                    return true;
-                }
-                return false;
+        sendMsg.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                sendMessage();
+                return true;
             }
+            return false;
         });
 
         // listener for when send button is clicked instead of keyboard send button
-        sendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMessage();
-            }
-        });
+        sendBtn.setOnClickListener(v -> sendMessage());
     }
 
     // onclick listener for drawer items

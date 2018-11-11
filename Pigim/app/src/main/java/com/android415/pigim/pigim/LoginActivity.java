@@ -48,45 +48,39 @@ public class LoginActivity extends AppCompatActivity {
         final EditText password = (EditText) findViewById(R.id.text_password);
         final CheckBox showPasswordCheck = (CheckBox) findViewById(R.id.checkBox_show_password);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // pattern for email format (https://www.journaldev.com/638/java-email-validation-regex)
-                Pattern emailFormat = Pattern.compile("^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$");
+        loginButton.setOnClickListener(v -> {
+            // pattern for email format (https://www.journaldev.com/638/java-email-validation-regex)
+            Pattern emailFormat = Pattern.compile("^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$");
 
-                // first checking if email format
-                Boolean isEmailFormat = username.getText().toString().matches(emailFormat.toString());
+            // first checking if email format
+            Boolean isEmailFormat = username.getText().toString().matches(emailFormat.toString());
 
-                if (username.getText().toString().toLowerCase().equals(USERNAME) &&
-                        password.getText().toString().equals(PASSWORD) &&
-                        isEmailFormat) {
-                    password.setText("");
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
+            if (username.getText().toString().toLowerCase().equals(USERNAME) &&
+                    password.getText().toString().equals(PASSWORD) &&
+                    isEmailFormat) {
+                password.setText("");
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+            } else {
+                password.setText("");
+                if (!isEmailFormat) {
+                    Toast.makeText(LoginActivity.this,
+                            "Username is an invalid email address.\nPlease try again.", Toast.LENGTH_LONG).show();
                 } else {
-                    password.setText("");
-                    if (!isEmailFormat) {
-                        Toast.makeText(LoginActivity.this,
-                                "Username is an invalid email address.\nPlease try again.", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(LoginActivity.this,
-                                "Username/password is incorrect.\nPlease try again.", Toast.LENGTH_LONG).show();
-                    }
+                    Toast.makeText(LoginActivity.this,
+                            "Username/password is incorrect.\nPlease try again.", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
-        showPasswordCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // showing password if show password checkbox is checked and setting cursor to the end
-                if (isChecked) {
-                    password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    password.setSelection(password.getText().length());
-                } else {
-                    password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    password.setSelection(password.getText().length());
-                }
+        showPasswordCheck.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // showing password if show password checkbox is checked and setting cursor to the end
+            if (isChecked) {
+                password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                password.setSelection(password.getText().length());
+            } else {
+                password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                password.setSelection(password.getText().length());
             }
         });
     }

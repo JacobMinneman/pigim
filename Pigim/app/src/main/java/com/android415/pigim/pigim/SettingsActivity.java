@@ -35,22 +35,19 @@ public class SettingsActivity extends AppCompatActivity {
         themeSwitch.setChecked(isDarkThemeOn);
 
         // listener/handler for theme switch
-        themeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (themeSwitch.isChecked()) {
-                    //switching to dark theme
-                    //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    isDarkThemeOn = true;
-                    finish();
-                    startActivity(getIntent());
-                } else {
-                    // switching to light theme
-                    //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    isDarkThemeOn = false;
-                    finish();
-                    startActivity(getIntent());
-                }
+        themeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (themeSwitch.isChecked()) {
+                //switching to dark theme
+                //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                isDarkThemeOn = true;
+                finish();
+                startActivity(getIntent());
+            } else {
+                // switching to light theme
+                //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                isDarkThemeOn = false;
+                finish();
+                startActivity(getIntent());
             }
         });
     }
