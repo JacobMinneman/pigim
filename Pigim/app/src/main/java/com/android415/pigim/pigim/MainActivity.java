@@ -57,11 +57,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mConversation = mPreferences.getString(MESSAGES_KEY, "");
 
         // setting up all of the view links
-        mSendMsg = (EditText) findViewById(R.id.sendMsgText);
-        mMessages = (TextView) findViewById(R.id.messageText);
-        mReceiveScroll = (ScrollView) findViewById(R.id.messageScroll);
-        mSendBtn = (Button) findViewById(R.id.button_send);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mSendMsg = findViewById(R.id.sendMsgText);
+        mMessages = findViewById(R.id.messageText);
+        mReceiveScroll = findViewById(R.id.messageScroll);
+        mSendBtn = findViewById(R.id.button_send);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
 
         // toggle for nav drawer open/close
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // used to connect to nav drawer listener
-        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
         mMessages.setText(mConversation);
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             preferencesEditor.apply();
 
             // removing from text view
-            final TextView messages = (TextView) findViewById(R.id.messageText);
+            final TextView messages = findViewById(R.id.messageText);
             messages.setText("");
             mConversation = "";
             return true;

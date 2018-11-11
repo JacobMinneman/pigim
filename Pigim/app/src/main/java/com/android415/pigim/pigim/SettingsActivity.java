@@ -20,7 +20,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        mThemeSwitch = (Switch) findViewById(R.id.theme_switch);
+        mThemeSwitch = findViewById(R.id.theme_switch);
 
         // Getting the theme from shared preferences
         mPreferences = getSharedPreferences(mSharedPrefFile, MODE_PRIVATE);

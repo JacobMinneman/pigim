@@ -38,10 +38,10 @@ public class LoginActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-        final Button loginButton = (Button) findViewById(R.id.button_login);
-        final EditText username = (EditText) findViewById(R.id.text_username);
-        final EditText password = (EditText) findViewById(R.id.text_password);
-        final CheckBox showPasswordCheck = (CheckBox) findViewById(R.id.checkBox_show_password);
+        final Button loginButton = findViewById(R.id.button_login);
+        final EditText username = findViewById(R.id.text_username);
+        final EditText password = findViewById(R.id.text_password);
+        final CheckBox showPasswordCheck = findViewById(R.id.checkBox_show_password);
 
         loginButton.setOnClickListener(v -> {
             // pattern for email format (https://www.journaldev.com/638/java-email-validation-regex)
