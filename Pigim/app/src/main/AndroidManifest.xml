@@ -17,16 +17,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <activity
-            android:name=".LoginActivity"
-            android:noHistory="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
         <!-- Start Firebase service -->
         <service
             android:name=".MyFirebaseMessagingService"
@@ -37,9 +27,18 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".SettingsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
 
 </manifest>

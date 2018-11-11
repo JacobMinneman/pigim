@@ -8,8 +8,8 @@ import com.google.firebase.messaging.RemoteMessage;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onNewToken(String token) {
+        Log.d("New token: ", token);
         super.onNewToken(token);
-        Log.d("NEW_TOKEN", token);
     }
 
     @Override
