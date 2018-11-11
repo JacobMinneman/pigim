@@ -18,8 +18,7 @@ import java.security.PrivateKey;
 import java.util.PriorityQueue;
 import java.util.regex.Pattern;
 
-public class LoginActivity extends AppCompatActivity
-{
+public class LoginActivity extends AppCompatActivity {
     private final String THEME_KEY = "theme";
 
     private SharedPreferences preferences;
@@ -31,20 +30,16 @@ public class LoginActivity extends AppCompatActivity
     private final String PASSWORD = "pass";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         // Getting the theme from shared preferences
         preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         isDarkThemeOn = preferences.getBoolean(THEME_KEY, true);
-        if (isDarkThemeOn)
-        {
+        if (isDarkThemeOn) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else
-        {
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
@@ -53,11 +48,9 @@ public class LoginActivity extends AppCompatActivity
         final EditText password = (EditText) findViewById(R.id.text_password);
         final CheckBox showPasswordCheck = (CheckBox) findViewById(R.id.checkBox_show_password);
 
-        loginButton.setOnClickListener(new View.OnClickListener()
-        {
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 // pattern for email format (https://www.journaldev.com/638/java-email-validation-regex)
                 Pattern emailFormat = Pattern.compile("^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$");
 
@@ -66,22 +59,16 @@ public class LoginActivity extends AppCompatActivity
 
                 if (username.getText().toString().toLowerCase().equals(USERNAME) &&
                         password.getText().toString().equals(PASSWORD) &&
-                        isEmailFormat)
-                {
+                        isEmailFormat) {
                     password.setText("");
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
-                }
-                else
-                {
+                } else {
                     password.setText("");
-                    if (!isEmailFormat)
-                    {
+                    if (!isEmailFormat) {
                         Toast.makeText(LoginActivity.this,
                                 "Username is an invalid email address.\nPlease try again.", Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(LoginActivity.this,
                                 "Username/password is incorrect.\nPlease try again.", Toast.LENGTH_LONG).show();
                     }
@@ -89,19 +76,14 @@ public class LoginActivity extends AppCompatActivity
             }
         });
 
-        showPasswordCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
+        showPasswordCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // showing password if show password checkbox is checked and setting cursor to the end
-                if(isChecked)
-                {
+                if (isChecked) {
                     password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     password.setSelection(password.getText().length());
-                }
-                else
-                {
+                } else {
                     password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     password.setSelection(password.getText().length());
                 }
@@ -111,19 +93,15 @@ public class LoginActivity extends AppCompatActivity
 
 
     @Override
-    protected void onRestart()
-    {
+    protected void onRestart() {
         super.onRestart();
 
         // Getting the theme from shared preferences
         preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         isDarkThemeOn = preferences.getBoolean(THEME_KEY, false);
-        if (isDarkThemeOn)
-        {
+        if (isDarkThemeOn) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else
-        {
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 

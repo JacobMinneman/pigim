@@ -20,8 +20,7 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
-{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final String THEME_KEY = "theme";
     private final String MESSAGES_KEY = "messages";
 
@@ -41,20 +40,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         // Getting the theme from shared preferences
         preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         isDarkThemeOn = preferences.getBoolean(THEME_KEY, true);
-        if (isDarkThemeOn)
-        {
+        if (isDarkThemeOn) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else
-        {
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
@@ -82,14 +77,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         messages.setText(conversation);
 
         // listener/handler for sending a message
-        sendMsg.setOnEditorActionListener(new EditText.OnEditorActionListener()
-        {
+        sendMsg.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-            {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-                if (actionId == EditorInfo.IME_ACTION_DONE)
-                {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     sendMessage();
                     return true;
                 }
@@ -98,11 +90,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         // listener for when send button is clicked instead of keyboard send button
-        sendBtn.setOnClickListener(new View.OnClickListener()
-        {
+        sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 sendMessage();
             }
         });
@@ -110,27 +100,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // onclick listener for drawer items
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case R.id.nav_settings:
-            {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_settings: {
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
             }
-            case R.id.nav_chats:
-            {
+            case R.id.nav_chats: {
                 break;
             }
-            case R.id.nav_contacts:
-            {
+            case R.id.nav_contacts: {
                 break;
             }
-            case R.id.nav_export:
-            {
+            case R.id.nav_export: {
                 break;
             }
         }
@@ -140,8 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     // used for send button in keyboard and send button next to edit text view
-    private void sendMessage()
-    {
+    private void sendMessage() {
         conversation = messages.getText().toString();
         conversation += "\n" + "----Me:----" + "\n" + sendMsg.getText().toString();
         sendMsg.setText("");
@@ -151,8 +134,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // inflates the overflow menu
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
@@ -160,16 +142,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // used to choose selection of menu
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         // nav drawer chosen
-        if (mToggle.onOptionsItemSelected(item))
-        {
+        if (mToggle.onOptionsItemSelected(item)) {
             return true;
         }
         // overflow menu chosen
-        else if (item.getItemId()==R.id.delete_history)
-        {
+        else if (item.getItemId() == R.id.delete_history) {
 
             // removing from preferences
             SharedPreferences.Editor preferencesEditor = preferences.edit();
@@ -189,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // updates the shared preferences
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
 
         SharedPreferences.Editor preferencesEditor = preferences.edit();
@@ -199,19 +178,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // makes sure shared preferences theme is displayed
     @Override
-    protected void onRestart()
-    {
+    protected void onRestart() {
         super.onRestart();
 
         // Getting the theme from shared preferences
         preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         isDarkThemeOn = preferences.getBoolean(THEME_KEY, false);
-        if (isDarkThemeOn)
-        {
+        if (isDarkThemeOn) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else
-        {
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
@@ -220,8 +195,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // if nav drawer is open then back button closes it, else regular function
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
             mDrawerLayout.closeDrawer(GravityCompat.START);
         else

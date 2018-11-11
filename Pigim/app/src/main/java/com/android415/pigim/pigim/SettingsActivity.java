@@ -7,8 +7,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-public class SettingsActivity extends AppCompatActivity
-{
+public class SettingsActivity extends AppCompatActivity {
 
     private final String THEME_KEY = "theme";
 
@@ -19,8 +18,7 @@ public class SettingsActivity extends AppCompatActivity
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
@@ -29,32 +27,24 @@ public class SettingsActivity extends AppCompatActivity
         // Getting the theme from shared preferences
         preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         isDarkThemeOn = preferences.getBoolean(THEME_KEY, true);
-        if (isDarkThemeOn)
-        {
+        if (isDarkThemeOn) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else
-        {
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
         themeSwitch.setChecked(isDarkThemeOn);
 
         // listener/handler for theme switch
-        themeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
+        themeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                if (themeSwitch.isChecked())
-                {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (themeSwitch.isChecked()) {
                     //switching to dark theme
                     //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     isDarkThemeOn = true;
                     finish();
                     startActivity(getIntent());
-                }
-                else
-                {
+                } else {
                     // switching to light theme
                     //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     isDarkThemeOn = false;
@@ -66,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
 
         SharedPreferences.Editor preferencesEditor = preferences.edit();
