@@ -10,7 +10,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,20 +23,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private final String THEME_KEY = "theme";
     private final String MESSAGES_KEY = "messages";
 
-    private SharedPreferences preferences;
-    private String sharedPrefFile = "com.android415.pigim.pigim";
+    private SharedPreferences mPreferences;
+    private String mSharedPrefFile = "com.android415.pigim.pigim";
 
-    private Boolean isDarkThemeOn = true;
+    private Boolean mIsDarkThemeOn = true;
 
-    private String conversation;
+    private String mConversation;
 
-    private EditText sendMsg;
-    private TextView messages;
-    private ScrollView receiveScroll;
-    private Button sendBtn;
+    private EditText mSendMsg;
+    private TextView mMessages;
+    private ScrollView mReceiveScroll;
+    private Button mSendBtn;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-    private NavigationView navigationView;
+    private NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +44,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         // Getting the theme from shared preferences
-        preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-        isDarkThemeOn = preferences.getBoolean(THEME_KEY, true);
-        if (isDarkThemeOn) {
+        mPreferences = getSharedPreferences(mSharedPrefFile, MODE_PRIVATE);
+        mIsDarkThemeOn = mPreferences.getBoolean(THEME_KEY, true);
+        if (mIsDarkThemeOn) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -55,13 +54,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Getting the previous conversation from shared preferences
         // (later moving to json file for storage)
-        conversation = preferences.getString(MESSAGES_KEY, "");
+        mConversation = mPreferences.getString(MESSAGES_KEY, "");
 
         // setting up all of the view links
-        sendMsg = (EditText) findViewById(R.id.sendMsgText);
-        messages = (TextView) findViewById(R.id.messageText);
-        receiveScroll = (ScrollView) findViewById(R.id.messageScroll);
-        sendBtn = (Button) findViewById(R.id.button_send);
+        mSendMsg = (EditText) findViewById(R.id.sendMsgText);
+        mMessages = (TextView) findViewById(R.id.messageText);
+        mReceiveScroll = (ScrollView) findViewById(R.id.messageScroll);
+        mSendBtn = (Button) findViewById(R.id.button_send);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         // toggle for nav drawer open/close
@@ -71,13 +70,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // used to connect to nav drawer listener
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
-        messages.setText(conversation);
+        mMessages.setText(mConversation);
 
         // listener/handler for sending a message
-        sendMsg.setOnEditorActionListener((v, actionId, event) -> {
+        mSendMsg.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 sendMessage();
                 return true;
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         // listener for when send button is clicked instead of keyboard send button
-        sendBtn.setOnClickListener(v -> sendMessage());
+        mSendBtn.setOnClickListener(v -> sendMessage());
     }
 
     // onclick listener for drawer items
@@ -116,11 +115,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // used for send button in keyboard and send button next to edit text view
     private void sendMessage() {
-        conversation = messages.getText().toString();
-        conversation += "\n" + "----Me:----" + "\n" + sendMsg.getText().toString();
-        sendMsg.setText("");
-        messages.setText(conversation);
-        receiveScroll.fullScroll(View.FOCUS_DOWN);
+        mConversation = mMessages.getText().toString();
+        mConversation += "\n" + "----Me:----" + "\n" + mSendMsg.getText().toString();
+        mSendMsg.setText("");
+        mMessages.setText(mConversation);
+        mReceiveScroll.fullScroll(View.FOCUS_DOWN);
     }
 
     // inflates the overflow menu
@@ -142,14 +141,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (item.getItemId() == R.id.delete_history) {
 
             // removing from preferences
-            SharedPreferences.Editor preferencesEditor = preferences.edit();
+            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
             preferencesEditor.remove(MESSAGES_KEY);
             preferencesEditor.apply();
 
             // removing from text view
             final TextView messages = (TextView) findViewById(R.id.messageText);
             messages.setText("");
-            conversation = "";
+            mConversation = "";
             return true;
         }
 
@@ -162,8 +161,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onPause() {
         super.onPause();
 
-        SharedPreferences.Editor preferencesEditor = preferences.edit();
-        preferencesEditor.putString(MESSAGES_KEY, conversation);
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferencesEditor.putString(MESSAGES_KEY, mConversation);
         preferencesEditor.apply();
     }
 
@@ -173,9 +172,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onRestart();
 
         // Getting the theme from shared preferences
-        preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-        isDarkThemeOn = preferences.getBoolean(THEME_KEY, false);
-        if (isDarkThemeOn) {
+        mPreferences = getSharedPreferences(mSharedPrefFile, MODE_PRIVATE);
+        mIsDarkThemeOn = mPreferences.getBoolean(THEME_KEY, false);
+        if (mIsDarkThemeOn) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);

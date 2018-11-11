@@ -6,25 +6,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.InputType;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.security.PrivateKey;
-import java.util.PriorityQueue;
 import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
     private final String THEME_KEY = "theme";
 
-    private SharedPreferences preferences;
-    private String sharedPrefFile = "com.android415.pigim.pigim";
+    private SharedPreferences mPreferences;
+    private String mSharedPrefFile = "com.android415.pigim.pigim";
 
-    private Boolean isDarkThemeOn = true;
+    private Boolean mIsDarkThemeOn = true;
 
     private final String USERNAME = "me@pigim.com";
     private final String PASSWORD = "pass";
@@ -35,9 +30,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // Getting the theme from shared preferences
-        preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-        isDarkThemeOn = preferences.getBoolean(THEME_KEY, true);
-        if (isDarkThemeOn) {
+        mPreferences = getSharedPreferences(mSharedPrefFile, MODE_PRIVATE);
+        mIsDarkThemeOn = mPreferences.getBoolean(THEME_KEY, true);
+        if (mIsDarkThemeOn) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -91,9 +86,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onRestart();
 
         // Getting the theme from shared preferences
-        preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-        isDarkThemeOn = preferences.getBoolean(THEME_KEY, false);
-        if (isDarkThemeOn) {
+        mPreferences = getSharedPreferences(mSharedPrefFile, MODE_PRIVATE);
+        mIsDarkThemeOn = mPreferences.getBoolean(THEME_KEY, false);
+        if (mIsDarkThemeOn) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
