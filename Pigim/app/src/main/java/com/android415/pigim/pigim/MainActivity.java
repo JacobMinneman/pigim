@@ -44,8 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Getting the previous conversation from shared preferences
         // TODO move to JSON file for storage
-        mConversation = getSharedPreferences(Utils.mSharedPrefFile, MODE_PRIVATE)
-                .getString(MESSAGES_KEY, "");
+        mConversation = Utils.mPreferences.getString(MESSAGES_KEY, "");
 
         // setting up all of the view links
         mSendMsg = findViewById(R.id.sendMsgText);
