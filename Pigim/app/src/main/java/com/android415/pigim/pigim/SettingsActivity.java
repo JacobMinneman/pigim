@@ -1,76 +1,48 @@
 package com.android415.pigim.pigim;
 
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 
-public class SettingsActivity extends AppCompatActivity
-{
+import static com.android415.pigim.pigim.Utils.THEME_KEY;
 
-    private final String THEME_KEY = "theme";
+public class SettingsActivity extends AppCompatActivity {
+    private final String TAG = this.getClass().getSimpleName();
 
-    private SharedPreferences preferences;
-    private String sharedPrefFile = "com.android415.pigim.pigim";
-    private Switch themeSwitch;
-    private Boolean isDarkThemeOn = true;
-
+    private Switch mThemeSwitch;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        Utils.setTheme();
 
-        themeSwitch = (Switch) findViewById(R.id.theme_switch);
-
-        // Getting the theme from shared preferences
-        preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-        isDarkThemeOn = preferences.getBoolean(THEME_KEY, true);
-        if (isDarkThemeOn)
-        {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else
-        {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-        themeSwitch.setChecked(isDarkThemeOn);
+        mThemeSwitch = findViewById(R.id.theme_switch);
+        mThemeSwitch.setChecked(
+                Utils.mPreferences.getBoolean(THEME_KEY,
+                        (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES))
+        );
 
         // listener/handler for theme switch
-        themeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                if (themeSwitch.isChecked())
-                {
-                    //switching to dark theme
-                    //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    isDarkThemeOn = true;
-                    finish();
-                    startActivity(getIntent());
-                }
-                else
-                {
-                    // switching to light theme
-                    //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    isDarkThemeOn = false;
-                    finish();
-                    startActivity(getIntent());
-                }
+        mThemeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (mThemeSwitch.isChecked()) {
+                //switching to dark theme
+                Utils.mPreferences.edit().putBoolean(THEME_KEY, true).apply();
+                finish();
+                startActivity(getIntent());
+            } else {
+                // switching to light theme
+                Utils.mPreferences.edit().putBoolean(THEME_KEY, false).apply();
+                finish();
+                startActivity(getIntent());
             }
         });
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
-
-        SharedPreferences.Editor preferencesEditor = preferences.edit();
-        preferencesEditor.putBoolean(THEME_KEY, isDarkThemeOn);
-        preferencesEditor.apply();
+        Utils.mPreferences.edit().putBoolean(THEME_KEY, mThemeSwitch.isChecked()).apply();
     }
 }
