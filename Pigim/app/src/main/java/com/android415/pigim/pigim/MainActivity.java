@@ -155,6 +155,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSharedPreferences(Utils.mSharedPrefFile, MODE_PRIVATE).edit()
                 .putString(MESSAGES_KEY, mConversation).apply();
     }
+    protected void onRestart() {
+        super.onRestart();
+        Utils.setTheme();
+    }
 
     // if nav drawer is open then back button closes it, else regular function
     @Override
