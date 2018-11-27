@@ -45,19 +45,14 @@
 
             </RelativeLayout>
 
-            <ScrollView
-                android:id="@+id/messageScroll"
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/msg_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/sendMsgLayout">
+                android:layout_above="@+id/sendMsgLayout" />
 
-                <TextView
-                    android:id="@+id/messageText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/conversationFontSize" />
 
-            </ScrollView>
         </RelativeLayout>
     </FrameLayout>
 
