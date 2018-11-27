@@ -8,17 +8,17 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
-import android.widget.TextView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import java.util.LinkedList;
+import java.util.Scanner;
 
 import static com.android415.pigim.pigim.Utils.MESSAGES_KEY;
 
@@ -29,12 +29,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String mConversation;
 
     private EditText mSendMsg;
-    private TextView mMessages;
-    private ScrollView mReceiveScroll;
     private Button mSendBtn;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private NavigationView mNavigationView;
+
+    private RecyclerView mRecyclerView;
+    private MessageListAdapter mAdapter;
+
+    private LinkedList<String> mMessageList = new LinkedList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +46,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Utils.setTheme();
 
         // Getting the previous conversation from shared preferences
-        // TODO move to JSON file for storage
         mConversation = Utils.mPreferences.getString(MESSAGES_KEY, "");
+        if (!mConversation.equals(""))
+        {
+            Scanner scanner = new Scanner(mConversation);
+            String sender, message;
+
+            while (scanner.hasNextLine())
+            {
+                sender = scanner.nextLine();
+
+                // if sender is contains a letter (is not empty)
+                if (sender.matches(".*[a-z].*"))
+                {
+                    message = scanner.nextLine();
+
+                    mMessageList.addLast(sender + "\n" + message);
+                }
+            }
+            scanner.close();
+        }
 
         // setting up all of the view links
         mSendMsg = findViewById(R.id.sendMsgText);
-        mMessages = findViewById(R.id.messageText);
-        mReceiveScroll = findViewById(R.id.messageScroll);
         mSendBtn = findViewById(R.id.button_send);
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
@@ -63,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        mMessages.setText(mConversation);
 
         // listener/handler for sending a message
         mSendMsg.setOnEditorActionListener((v, actionId, event) -> {
@@ -78,6 +96,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mSendBtn.setOnClickListener(v -> sendMessage());
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        // Get a handle to the RecyclerView.
+        mRecyclerView = findViewById(R.id.msg_recycler);
+        // Create an adapter and supply the data to be displayed.
+        mAdapter = new MessageListAdapter(this, mMessageList);
+        // Connect the adapter with the RecyclerView.
+        mRecyclerView.setAdapter(mAdapter);
+        // Give the RecyclerView a default layout manager.
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     // onclick listener for drawer items
@@ -90,15 +117,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 return true;
             }
-            case R.id.nav_chats: {
-                break;
-            }
-            case R.id.nav_contacts: {
-                break;
-            }
-            case R.id.nav_export: {
-                break;
-            }
+            // For future use
+//            case R.id.nav_chats: {
+//                break;
+//            }
+//            case R.id.nav_contacts: {
+//                break;
+//            }
+//            case R.id.nav_export: {
+//                break;
+//            }
         }
 
         //mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -108,11 +136,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // used for send button in keyboard and send button next to edit text view
     private void sendMessage() {
         if (!mSendMsg.getText().toString().equals("")) {
-            mConversation = mMessages.getText().toString();
-            mConversation += "\n" + "" + "Me:" + "\n" + mSendMsg.getText().toString() + "\n";
+            String message = "Me:" + "\n" + mSendMsg.getText().toString();
+            mConversation += message + "\n";
             mSendMsg.setText("");
-            mMessages.setText(mConversation);
-            mReceiveScroll.fullScroll(View.FOCUS_DOWN);
+
+            int messageListSize = mMessageList.size();
+            mMessageList.addLast(message);
+            mRecyclerView.getAdapter().notifyItemInserted(messageListSize);
+            mRecyclerView.smoothScrollToPosition(messageListSize);
+
         }
     }
 
@@ -137,10 +169,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSharedPreferences(Utils.mSharedPrefFile, MODE_PRIVATE).edit()
                     .remove(MESSAGES_KEY).apply();
 
-            // removing from text view
-            final TextView messages = findViewById(R.id.messageText);
-            messages.setText("");
+            // removing from recycler view
             mConversation = "";
+            mMessageList.clear();
+            mRecyclerView.getAdapter().notifyDataSetChanged();
             return true;
         }
 
