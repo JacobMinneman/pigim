@@ -14,7 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_toRightOf="@+id/menu_title"
-        android:src="@mipmap/ic_launcher_round" />
+        android:src="@mipmap/ic_launcher_round"/>
+        <!--android:src="@mipmap/ic_launcher_round" />-->
+
 
     <TextView
         android:id="@+id/menu_title"

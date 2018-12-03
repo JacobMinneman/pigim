@@ -6,10 +6,10 @@
             <!--android:id="@+id/nav_chats"-->
             <!--android:icon="@drawable/ic_chats"-->
             <!--android:title="@string/chats" />-->
-        <!--<item-->
-            <!--android:id="@+id/nav_contacts"-->
-            <!--android:icon="@drawable/ic_contacts"-->
-            <!--android:title="@string/contacts" />-->
+        <item
+            android:id="@+id/nav_contacts"
+            android:icon="@drawable/ic_contacts"
+            android:title="@string/contacts" />
         <!--<item-->
             <!--android:id="@+id/nav_export"-->
             <!--android:icon="@drawable/ic_export"-->

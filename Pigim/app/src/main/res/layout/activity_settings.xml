@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/settings_menu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/settings_title">
         <Switch
             android:id="@+id/theme_switch"
@@ -29,4 +29,104 @@
         android:textStyle="bold"
         android:layout_marginBottom="@dimen/title_settings_margin"
         android:text="Settings" />
+
+    <TextView
+        android:id="@+id/accountSettings_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Account Settings"
+        android:layout_below="@+id/settings_menu"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="@dimen/title_text_size"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/accountPicture_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Profile Picture"
+        android:layout_below="@+id/accountSettings_title"
+        android:textSize="@dimen/subTitle_textSize"
+        android:paddingLeft="20dp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/accountPicture_title"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="10dp">
+    <RelativeLayout
+        android:id="@+id/accountPicture_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center_horizontal">
+
+        <ImageButton
+            android:id="@+id/image_bluejay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/bluejay_foreground" />
+
+        <ImageButton
+            android:id="@+id/image_cardinal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image_bluejay"
+            android:src="@mipmap/cardinal_foreground" />
+
+        <ImageButton
+            android:id="@+id/image_eagle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image_cardinal"
+            android:src="@mipmap/eagle_foreground" />
+
+        <ImageButton
+            android:id="@+id/image_ostrich"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image_eagle"
+            android:src="@mipmap/ostrich_foreground" />
+
+        <ImageButton
+            android:id="@+id/image_owl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image_ostrich"
+            android:src="@mipmap/owl_foreground" />
+
+        <ImageButton
+            android:id="@+id/image_peacock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image_owl"
+            android:src="@mipmap/peacock_foreground" />
+
+        <ImageButton
+            android:id="@+id/image_penguin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image_peacock"
+            android:src="@mipmap/penguin_foreground" />
+
+        <ImageButton
+            android:id="@+id/image_phoenix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image_penguin"
+            android:src="@mipmap/phoenix_foreground" />
+
+        <ImageButton
+            android:id="@+id/image_pigeon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image_phoenix"
+            android:src="@mipmap/pigeon_foreground" />
+
+    </RelativeLayout>
+    </ScrollView>
+
+
 </RelativeLayout>

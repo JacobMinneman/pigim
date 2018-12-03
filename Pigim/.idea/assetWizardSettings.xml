@@ -45,8 +45,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\Jacob\Desktop\wallpaper\abstract-background-7.jpg" />
-                                      <entry key="outputName" value="ic_nav_back" />
+                                      <entry key="imageAsset" value="C:\Users\Jacob\Desktop\birds\pigeon.png" />
+                                      <entry key="outputName" value="pigeon" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -62,7 +62,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="110" />
+                                                <entry key="scalingPercent" value="105" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -75,17 +75,13 @@
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="000000" />
-                                      <entry key="foregroundImage" value="C:\Users\Jacob\Desktop\wallpaper\abstract-background-7.jpg" />
+                                      <entry key="foregroundImage" value="C:\Users\Jacob\Desktop\birds\phoenix.png" />
+                                      <entry key="outputName" value="phoenix" />
                                     </map>
                                   </option>
                                 </PersistentState>
                               </value>
                             </entry>
-                          </map>
-                        </option>
-                        <option name="values">
-                          <map>
-                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>
