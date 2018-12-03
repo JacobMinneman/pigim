@@ -13,4 +13,5 @@
     <dimen name="title_settings_margin">15dp</dimen>
     <dimen name="message_margin">8dp</dimen>
     <dimen name="message_size">24sp</dimen>
+    <dimen name="subTitle_textSize">15dp</dimen>
 </resources>

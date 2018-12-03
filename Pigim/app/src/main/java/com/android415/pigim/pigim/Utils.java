@@ -10,6 +10,7 @@ import static android.content.Context.MODE_PRIVATE;
 class Utils {
     static final String THEME_KEY = "theme";
     static final String MESSAGES_KEY = "messages";
+    static final String PROFILE_PIC = "profilePic";
     static String mSharedPrefFile = "com.android415.pigim.pigim";
     static SharedPreferences mPreferences;
 
