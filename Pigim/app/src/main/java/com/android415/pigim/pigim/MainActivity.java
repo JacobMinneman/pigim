@@ -12,15 +12,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 import static com.android415.pigim.pigim.Utils.MESSAGES_KEY;
+import static com.android415.pigim.pigim.Utils.PROFILE_PIC;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final String TAG = this.getClass().getSimpleName();
@@ -38,6 +42,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MessageListAdapter mAdapter;
 
     private LinkedList<String> mMessageList = new LinkedList<>();
+
+    private String profilePic;
+
+    private ImageView profilePicView;
+    private NavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             scanner.close();
         }
+
+        profilePic = Utils.mPreferences.getString(PROFILE_PIC, "default");
+        setProfilePic();
 
         // setting up all of the view links
         mSendMsg = findViewById(R.id.sendMsgText);
@@ -117,11 +129,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 return true;
             }
+            case R.id.nav_contacts: {
+                break;
+            }
             // For future use
 //            case R.id.nav_chats: {
-//                break;
-//            }
-//            case R.id.nav_contacts: {
 //                break;
 //            }
 //            case R.id.nav_export: {
@@ -199,5 +211,77 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mDrawerLayout.closeDrawer(GravityCompat.START);
         else
             super.onBackPressed();
+    }
+
+    public void setProfilePic()
+    {
+        navView = findViewById(R.id.nav_view);
+        final View VIEW = navView.getHeaderView(0);
+        profilePicView = VIEW.findViewById(R.id.menu_pigim_icon);
+
+        switch (profilePic)
+        {
+            case "owl":
+            {
+                profilePicView.setImageResource(R.mipmap.owl_round);
+                break;
+            }
+
+            case"eagle":
+            {
+                profilePicView.setImageResource(R.mipmap.eagle_round);
+                break;
+            }
+
+            case "pigeon":
+            {
+                profilePicView.setImageResource(R.mipmap.pigeon_round);
+                break;
+            }
+
+            case "bluejay":
+            {
+                profilePicView.setImageResource(R.mipmap.bluejay_round);
+                break;
+            }
+
+            case "ostrich":
+            {
+                profilePicView.setImageResource(R.mipmap.ostrich_round);
+                break;
+            }
+
+            case "peacock":
+            {
+                profilePicView.setImageResource(R.mipmap.peacock_round);
+                break;
+            }
+
+            case "penguin":
+            {
+                profilePicView.setImageResource(R.mipmap.penguin_round);
+                break;
+            }
+
+            case "phoenix":
+            {
+                profilePicView.setImageResource(R.mipmap.phoenix_round);
+                break;
+            }
+
+            case "cardinal":
+            {
+                profilePicView.setImageResource(R.mipmap.cardinal_round);
+                break;
+            }
+
+            default:
+            {
+                profilePicView.setImageResource(R.mipmap.ic_launcher_round);
+                break;
+            }
+
+        }
+
     }
 }
