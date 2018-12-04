@@ -13,47 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/main_screen"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_main_screen">
-
-            <RelativeLayout
-                android:id="@+id/sendMsgLayout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/writeMsgHeight"
-                android:layout_alignParentBottom="true">
-
-                <EditText
-                    android:id="@+id/sendMsgText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toLeftOf="@+id/button_send"
-                    android:ems="10"
-                    android:hint="@string/writeMsgPrompt"
-                    android:imeOptions="actionDone"
-                    android:inputType="textCapSentences|textAutoCorrect" />
-
-                <Button
-                    android:id="@+id/button_send"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="Send" />
-
-
-            </RelativeLayout>
-
-
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/msg_recycler"
+                android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/sendMsgLayout" />
+                android:layout_height="match_parent"/>
 
-
-        </RelativeLayout>
     </FrameLayout>
 
 

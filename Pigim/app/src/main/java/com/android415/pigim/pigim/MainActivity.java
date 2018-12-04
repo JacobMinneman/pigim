@@ -13,15 +13,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.android415.pigim.pigim.Adapter.UserAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import java.util.LinkedList;
-import java.util.Scanner;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.android415.pigim.pigim.Model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.android415.pigim.pigim.Utils.MESSAGES_KEY;
 import static com.android415.pigim.pigim.Utils.PROFILE_PIC;
@@ -32,17 +37,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static FirebaseUser mUser;
     private String mConversation;
 
-    private EditText mSendMsg;
-    private Button mSendBtn;
+    // Drawer
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private NavigationView mNavigationView;
 
-    private RecyclerView mRecyclerView;
-    private MessageListAdapter mAdapter;
-
-    private LinkedList<String> mMessageList = new LinkedList<>();
-
+    // Recycler View
+    private RecyclerView recyclerView;
+    private UserAdapter userAdapter;
+    private List<User> listOfUsers = new ArrayList<>();
     private String profilePic;
 
     private ImageView profilePicView;
@@ -54,34 +57,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Utils.setTheme();
 
-        // Getting the previous conversation from shared preferences
-        mConversation = Utils.mPreferences.getString(MESSAGES_KEY, "");
-        if (!mConversation.equals(""))
-        {
-            Scanner scanner = new Scanner(mConversation);
-            String sender, message;
-
-            while (scanner.hasNextLine())
-            {
-                sender = scanner.nextLine();
-
-                // if sender is contains a letter (is not empty)
-                if (sender.matches(".*[a-z].*"))
-                {
-                    message = scanner.nextLine();
-
-                    mMessageList.addLast(sender + "\n" + message);
-                }
-            }
-            scanner.close();
-        }
-
         profilePic = Utils.mPreferences.getString(PROFILE_PIC, "default");
         setProfilePic();
 
-        // setting up all of the view links
-        mSendMsg = findViewById(R.id.sendMsgText);
-        mSendBtn = findViewById(R.id.button_send);
+
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         // toggle for nav drawer open/close
@@ -94,29 +73,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
+        // recycler view of users
+        readUsers();
+        recyclerView = findViewById(R.id.recycler_view);
+        userAdapter = new UserAdapter(this,listOfUsers);
+        recyclerView.setAdapter(userAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // listener/handler for sending a message
-        mSendMsg.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                sendMessage();
-                return true;
+
+    }
+
+    private void readUsers() {
+
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listOfUsers.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    User user = snapshot.getValue(User.class);
+
+                    assert user != null;
+                    assert currentUser != null;
+
+                    if(!currentUser.getUid().equals(user.getId())) {
+                        listOfUsers.add(user);
+                    }
+                }
             }
-            return false;
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
         });
-
-        // listener for when send button is clicked instead of keyboard send button
-        mSendBtn.setOnClickListener(v -> sendMessage());
-
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        // Get a handle to the RecyclerView.
-        mRecyclerView = findViewById(R.id.msg_recycler);
-        // Create an adapter and supply the data to be displayed.
-        mAdapter = new MessageListAdapter(this, mMessageList);
-        // Connect the adapter with the RecyclerView.
-        mRecyclerView.setAdapter(mAdapter);
-        // Give the RecyclerView a default layout manager.
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     // onclick listener for drawer items
@@ -146,19 +138,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     // used for send button in keyboard and send button next to edit text view
-    private void sendMessage() {
-        if (!mSendMsg.getText().toString().equals("")) {
-            String message = "Me:" + "\n" + mSendMsg.getText().toString();
-            mConversation += message + "\n";
-            mSendMsg.setText("");
-
-            int messageListSize = mMessageList.size();
-            mMessageList.addLast(message);
-            mRecyclerView.getAdapter().notifyItemInserted(messageListSize);
-            mRecyclerView.smoothScrollToPosition(messageListSize);
-
-        }
-    }
 
     // inflates the overflow menu
     @Override
@@ -175,16 +154,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
         // overflow menu chosen
-        else if (item.getItemId() == R.id.delete_history) {
-
-            // removing from preferences
-            getSharedPreferences(Utils.mSharedPrefFile, MODE_PRIVATE).edit()
-                    .remove(MESSAGES_KEY).apply();
-
-            // removing from recycler view
-            mConversation = "";
-            mMessageList.clear();
-            mRecyclerView.getAdapter().notifyDataSetChanged();
+        else if (item.getItemId() == R.id.logout) {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(MainActivity.this, StartActivity.class));
+            finish();
             return true;
         }
 
@@ -277,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             default:
             {
-                profilePicView.setImageResource(R.mipmap.ic_launcher_round);
+                profilePicView.setImageResource(R.mipmap.default_user_icon);
                 break;
             }
 
