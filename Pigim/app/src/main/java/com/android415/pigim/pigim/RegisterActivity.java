@@ -83,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                     HashMap<String,String> hashMap = new HashMap<>();
                     hashMap.put("id",userid);
                     hashMap.put("username",username);
-                    hashMap.put("imageURL","default");
+                    hashMap.put("imageURL","default_user_icon");
 
                     // Attempts to add that profile to the database
                     dbRef.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -102,7 +102,6 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-
 
     }
 
