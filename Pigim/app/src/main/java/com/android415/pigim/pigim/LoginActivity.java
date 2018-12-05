@@ -1,79 +1,60 @@
 package com.android415.pigim.pigim;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
-import com.google.firebase.FirebaseApp;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.util.Arrays;
-import java.util.List;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 public class LoginActivity extends AppCompatActivity {
-    private final String TAG = this.getClass().getSimpleName();
-    private static final int RC_SIGN_IN = 1;
 
-    private FirebaseUser mUser;
+    private MaterialEditText email, password;
+    private Button button_login;
+    private FirebaseAuth authentication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseApp.initializeApp(this);
-        Utils.setTheme();
+        setContentView(R.layout.activity_login);
 
-        if (!isUserLoggedIn()) {
-            createSignInIntent();
-        }
-    }
+        authentication = FirebaseAuth.getInstance();
+        email = findViewById(R.id.loginemail);
+        password = findViewById(R.id.loginpassword);
+        button_login = findViewById(R.id.button_login);
 
-    private void createSignInIntent() {
-        // Choose authentication providers
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build()
-        );
+        button_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String emailText = email.getText().toString();
+                String passwordText = password.getText().toString();
 
-        // Create and launch sign-in intent
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .setIsSmartLockEnabled(false)
-                        .setLogo(R.mipmap.ic_launcher_round)
-                        .build(),
-                RC_SIGN_IN);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        Log.i(TAG, "Result code: " + requestCode);
-
-        if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                mUser = FirebaseAuth.getInstance().getCurrentUser();
-                Log.i(TAG, "Logged in as " + mUser.getEmail());
-                finish();
-                startActivity(new Intent(this, MainActivity.class));
-            } else {
-                if (response != null) {
-                    Log.e(TAG, response.getError().getStackTrace().toString());
-                } else {
-                    finish();
+                if(TextUtils.isEmpty(emailText) || TextUtils.isEmpty(passwordText)){
+                    Toast.makeText(LoginActivity.this,"Must enter both email and password",Toast.LENGTH_SHORT).show();
+                }else{
+                    authentication.signInWithEmailAndPassword(emailText,passwordText).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            }else{
+                                Toast.makeText(LoginActivity.this,"Login failed!",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
             }
-        }
-    }
+        });
 
-    private boolean isUserLoggedIn() {
-        return (mUser != null);
     }
 }

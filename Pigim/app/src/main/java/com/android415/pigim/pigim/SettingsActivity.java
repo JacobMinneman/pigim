@@ -6,8 +6,6 @@ import android.support.v7.app.AppCompatDelegate;
 import android.widget.ImageButton;
 import android.widget.Switch;
 
-import com.google.android.gms.common.internal.FallbackServiceBroker;
-
 import static com.android415.pigim.pigim.Utils.PROFILE_PIC;
 import static com.android415.pigim.pigim.Utils.THEME_KEY;
 
