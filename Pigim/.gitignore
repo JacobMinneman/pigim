@@ -58,14 +58,3 @@ captures/
 freeline.py
 freeline/
 freeline_project_description.json
-
-# fastlane
-fastlane/report.xml
-fastlane/Preview.html
-fastlane/screenshots
-fastlane/test_output
-<<<<<<<<< Temporary merge branch 1
-fastlane/readme.md
-=========
-fastlane/readme.md
->>>>>>>>> Temporary merge branch 2
