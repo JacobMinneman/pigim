@@ -1,6 +1,5 @@
 package com.android415.pigim.pigim.Adapter;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,10 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.android415.pigim.pigim.MainActivity;
 import com.android415.pigim.pigim.R;
-import com.bumptech.glide.Glide;
 import com.android415.pigim.pigim.MessageActivity;
 import com.android415.pigim.pigim.Model.User;
 
@@ -44,11 +41,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         final User user = users.get(position);
         viewHolder.username.setText(user.getUsername());
-        if(user.getImageURL().equals("default")){
-            viewHolder.profile_image.setImageResource(R.mipmap.default_user_icon);
-        } else{
-            //Glide.load(user.getImageURL()).into(viewHolder.profile_image);
-        }
+
+        String profileImg = user.getImageURL();
+        int profileImageID = context.getResources().getIdentifier(profileImg,"mipmap","com.android415.pigim.pigim");
+        viewHolder.profile_image.setImageResource(profileImageID);
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

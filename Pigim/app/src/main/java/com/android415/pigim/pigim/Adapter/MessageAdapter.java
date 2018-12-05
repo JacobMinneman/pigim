@@ -49,14 +49,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder viewHolder, int position) {
 
         Message msg = conversation.get(position);
-
         viewHolder.showMessage.setText(msg.getMessage());
 
-        if (imageurl.equals("default"))
-            viewHolder.profile_image.setImageResource(R.mipmap.default_user_icon);
-        else
-            Glide.with(context).load(imageurl).into(viewHolder.profile_image);
-
+        int profileImageID = context.getResources().getIdentifier(imageurl,"mipmap","com.android415.pigim.pigim");
+        viewHolder.profile_image.setImageResource(profileImageID);
     }
 
     @Override

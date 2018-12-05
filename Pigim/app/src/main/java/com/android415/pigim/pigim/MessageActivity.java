@@ -83,11 +83,11 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 username.setText(user.getUsername());
-                if(user.getImageURL().equals("default")){
-                    profile_image.setImageResource(R.mipmap.default_user_icon);
-                } else{
-                    Glide.with(MessageActivity.this).load(user.getImageURL()).into(profile_image);
-                }
+
+
+                String profileImg = user.getImageURL();
+                int profileImageID = getResources().getIdentifier(profileImg,"mipmap","com.android415.pigim.pigim");
+                profile_image.setImageResource(profileImageID);
 
                 getMessages(fuser.getUid(), userid, user.getImageURL());
             }
