@@ -19,6 +19,7 @@
         android:text="hello"
         android:id="@+id/message_box"
         android:textSize="18sp"
+        android:textColor="#000"
         android:padding="8dp"
         android:background="@drawable/message_background_left"/>
 

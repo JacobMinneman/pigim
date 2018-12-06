@@ -1,10 +1,15 @@
 package com.android415.pigim.pigim;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.widget.ImageButton;
 import android.widget.Switch;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import static com.android415.pigim.pigim.Utils.PROFILE_PIC;
 import static com.android415.pigim.pigim.Utils.THEME_KEY;
@@ -161,6 +166,7 @@ public class SettingsActivity extends AppCompatActivity {
                 picChosen = "owl";
                 owl.setEnabled(false);
                 owl.setAlpha(SELECTED_ALPHA);
+                updateUserProfilePic(picChosen);
                 break;
             }
             case eagle:
@@ -175,6 +181,7 @@ public class SettingsActivity extends AppCompatActivity {
                 picChosen = "pigeon";
                 pigeon.setEnabled(false);
                 pigeon.setAlpha(SELECTED_ALPHA);
+                updateUserProfilePic(picChosen);
                 break;
             }
             case bluejay:
@@ -182,6 +189,7 @@ public class SettingsActivity extends AppCompatActivity {
                 picChosen = "bluejay";
                 bluejay.setEnabled(false);
                 bluejay.setAlpha(SELECTED_ALPHA);
+                updateUserProfilePic(picChosen);
                 break;
             }
             case ostrich:
@@ -189,6 +197,7 @@ public class SettingsActivity extends AppCompatActivity {
                 picChosen = "ostrich";
                 ostrich.setEnabled(false);
                 ostrich.setAlpha(SELECTED_ALPHA);
+                updateUserProfilePic(picChosen);
                 break;
             }
             case peacock:
@@ -196,6 +205,7 @@ public class SettingsActivity extends AppCompatActivity {
                 picChosen = "peacock";
                 peacock.setEnabled(false);
                 peacock.setAlpha(SELECTED_ALPHA);
+                updateUserProfilePic(picChosen);
                 break;
             }
             case penguin:
@@ -203,6 +213,7 @@ public class SettingsActivity extends AppCompatActivity {
                 picChosen = "penguin";
                 penguin.setEnabled(false);
                 penguin.setAlpha(SELECTED_ALPHA);
+                updateUserProfilePic(picChosen);
                 break;
             }
             case phoenix:
@@ -210,6 +221,7 @@ public class SettingsActivity extends AppCompatActivity {
                 picChosen = "phoenix";
                 phoenix.setEnabled(false);
                 phoenix.setAlpha(SELECTED_ALPHA);
+                updateUserProfilePic(picChosen);
                 break;
             }
             case cardinal:
@@ -217,11 +229,22 @@ public class SettingsActivity extends AppCompatActivity {
                 picChosen = "cardinal";
                 cardinal.setEnabled(false);
                 cardinal.setAlpha(SELECTED_ALPHA);
+                updateUserProfilePic(picChosen);
                 break;
             }
             default:
                 picChosen = "default";
         }
+    }
+
+    private void updateUserProfilePic(String imageName){
+
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+
+        dbRef.child("Users").child(currentUser.getUid()).child("imageURL").setValue(imageName);
+
+
     }
 
     private void setAllEnabled()
