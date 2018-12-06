@@ -7,20 +7,31 @@
     android:gravity="center_vertical"
     tools:context=".StartActivity">
 
-    <Button
-        android:layout_width="256dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="108dp"
+        android:layout_height="111dp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/btn_login"
-        android:text="login"/>
+        android:scaleType="center"
+        android:layout_marginBottom="50dp"
+        app:srcCompat="@mipmap/ic_launcher_round" />
 
     <Button
-        android:layout_width="256dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:id="@+id/btn_login"
+        android:layout_width="154dp"
+        android:layout_height="64dp"
+        android:layout_below="@id/imageView"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="-14dp"
+        android:text="login" />
+
+    <Button
         android:id="@+id/btn_register"
-        android:text="register"/>
+        android:layout_width="154dp"
+        android:layout_height="64dp"
+        android:layout_below="@id/btn_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:text="register" />
 
 </RelativeLayout>
