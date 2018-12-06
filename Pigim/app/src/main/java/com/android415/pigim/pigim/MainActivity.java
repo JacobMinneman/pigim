@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.android415.pigim.pigim.Adapter.UserAdapter;
+import com.android415.pigim.pigim.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,7 +24,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.android415.pigim.pigim.Model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +83,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    // Makes the call to the database to populate the list of users
     private void readUsers() {
+
+        listOfUsers.clear();
 
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -91,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listOfUsers.clear();
+
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     User user = snapshot.getValue(User.class);
 
@@ -100,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     if(!currentUser.getUid().equals(user.getId())) {
                         listOfUsers.add(user);
+                        userAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -172,6 +176,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSharedPreferences(Utils.mSharedPrefFile, MODE_PRIVATE).edit()
                 .putString(MESSAGES_KEY, mConversation).apply();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     protected void onRestart() {
         super.onRestart();
         Utils.setTheme();
@@ -186,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
     }
 
+    // Sets the profile pic in the drawer
     public void setProfilePic()
     {
         navView = findViewById(R.id.nav_view);
