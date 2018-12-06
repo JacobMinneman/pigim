@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.android415.pigim.pigim.Adapter.UserAdapter;
+import com.android415.pigim.pigim.Model.Message;
 import com.android415.pigim.pigim.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,8 +46,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Recycler View
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
-    private List<User> listOfUsers = new ArrayList<>();
+    private final List<User> listOfUsers = new ArrayList<>();
+    private final ArrayList<String> userIDs = new ArrayList<>();
+
     private String profilePic;
+
 
     private ImageView profilePicView;
     private NavigationView navView;
@@ -74,12 +78,77 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView.setNavigationItemSelectedListener(this);
 
         // recycler view of users
-        readUsers();
+        //readUsers();
+        populateConversations();
         recyclerView = findViewById(R.id.recycler_view);
         userAdapter = new UserAdapter(this,listOfUsers);
         recyclerView.setAdapter(userAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+    }
+
+    // Populates the recyclerView with users that the current user has a conversation with
+    private void populateConversations(){
+
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Message msg = snapshot.getValue(Message.class);
+
+                    if(msg.getReceiver().equals(currentUser.getUid())){
+                        userIDs.add(msg.getSender());
+                    } else if(msg.getSender().equals(currentUser.getUid())){
+                        userIDs.add(msg.getReceiver());
+                    }
+                }
+
+                loadUsers();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void loadUsers() {
+
+        listOfUsers.clear();
+
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    User user = snapshot.getValue(User.class);
+
+                    for(String userID : userIDs){
+
+                        if((userID.equals(user.getId()) && (!currentUser.getUid().equals(user.getId())))){
+                            listOfUsers.add(user);
+                            userAdapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -126,7 +195,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             }
             case R.id.nav_contacts: {
-                break;
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(this, ContactsActivity.class);
+                startActivity(intent);
+                return true;
             }
             // For future use
 //            case R.id.nav_chats: {
@@ -175,11 +247,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getSharedPreferences(Utils.mSharedPrefFile, MODE_PRIVATE).edit()
                 .putString(MESSAGES_KEY, mConversation).apply();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     protected void onRestart() {

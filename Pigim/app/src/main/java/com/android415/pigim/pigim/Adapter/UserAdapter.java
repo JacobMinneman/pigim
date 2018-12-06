@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.android415.pigim.pigim.ContactsActivity;
 import com.android415.pigim.pigim.MainActivity;
 import com.android415.pigim.pigim.R;
 import com.android415.pigim.pigim.MessageActivity;
@@ -23,6 +25,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private Context context;
 
     public UserAdapter(MainActivity context, List<User> users){
+        this.inflater = LayoutInflater.from(context);
+        this.users = users;
+        this.context = context;
+    }
+
+    public UserAdapter(ContactsActivity context, List<User> users){
         this.inflater = LayoutInflater.from(context);
         this.users = users;
         this.context = context;
